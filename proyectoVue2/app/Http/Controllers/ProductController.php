@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Products/Create');
     }
 
     /**
@@ -31,7 +31,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+        ]);
+
+        $product = Product::create($request->all());
+
+        return redirect()->route('products.index');
     }
 
     /**
@@ -45,24 +53,35 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        return Inertia::render('Products/Edit', compact('product'));
+    public function edit(Product $product)
+    {   
+        // return $product;
+        return Inertia::render('Products/Edit', ['product' => $product]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+        ]);
+
+        $product -> update($request -> all());
+
+        return redirect()->route('products.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return response()->json(['status'=>true]);
     }
 }
