@@ -26,3 +26,4 @@ Route::middleware([
 
 Route::resource('products', App\Http\Controllers\ProductController::class)->middleware('auth:sanctum');
 Route::resource('suppliers', App\Http\Controllers\SupplierController::class)->middleware('auth:sanctum');
+Route::post('createSuppliers',[App\Http\Controllers\SupplierController::class, 'createSuppliers'])->middleware('auth:sanctum');

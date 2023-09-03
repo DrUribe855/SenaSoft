@@ -71,4 +71,19 @@ class SupplierController extends Controller
     {
         //
     }
+
+    public function createSuppliers(Request $request){
+        // $request->validate([
+        //     'name'=> 'required',
+        // ]);
+
+        $suppliers = Supplier::create($request->all());
+
+        $respuesta = [
+            'suppliers' => $suppliers,
+            'status' => true,
+        ];
+
+        return response()->json($respuesta);
+    }
 }

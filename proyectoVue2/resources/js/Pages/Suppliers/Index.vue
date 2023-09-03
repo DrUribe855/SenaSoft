@@ -1,9 +1,17 @@
 <script setup>
+import modalCrear from './ModalCrear.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import {Link} from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useForm} from '@inertiajs/vue3'
 import axios from 'axios';
+
+
+
+const components = defineComponent({
+    'modal-crear': modalCrear,
+});
+
 const props = defineProps({
         suppliers: Array,
 });
@@ -25,6 +33,21 @@ const crearElemento = () => {
     }catch(error){
         console.log("Error al crear el elemento: ", error);
     }
+}
+
+const openModelCrear = () => {
+    console.log("Abriendo modal");
+    modalVisible.value = true;
+}
+
+const closeModelCrear = () => {
+    console.log("Cerrando Modal");
+    modalVisible.value = false;
+
+}
+
+const agregarSuppliers = (dato) => {
+    suppliers.push(dato);
 }
 
 // const destroy = () => {
@@ -70,7 +93,7 @@ const crearElemento = () => {
                         </div>
                     </div>
                     <div class="md:col-span-2 mt-5 md:mt-0">
-                        <button @click="modalVisible = true" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md" type="button">Crear</button>
+                        <button @click="openModelCrear()" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md" type="button">Crear</button>
                         <div class="shadow bg-white md:rounded-md p-4">
                             <table>
                                 <thead>
@@ -96,8 +119,11 @@ const crearElemento = () => {
                 </div>
             </div>
         </div>
+
     </AppLayout>
-<transition
+
+    <modal-crear @closeModelCrear="closeModelCrear" @agregarSuppliers="agregarSuppliers" v-if="modalVisible" :suppliers="suppliers" ></modal-crear>
+<!-- <transition
     enter-active-class="ease-out duration-300"
     enter-class="opacity-0"
     enter-to-class="opacity-100"
@@ -105,30 +131,10 @@ const crearElemento = () => {
     leave-class="opacity-100"
     leave-to-class="opacity-0">
 <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true" v-show="modalVisible">
-    <!--
-        Background backdrop, show/hide based on modal state.
-
-        Entering: "ease-out duration-300"
-        From: "opacity-0"
-        To: "opacity-100"
-        Leaving: "ease-in duration-200"
-        From: "opacity-100"
-        To: "opacity-0"
-    -->
     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
     <div class="fixed inset-0 z-10 overflow-y-auto">
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-        <!--
-            Modal panel, show/hide based on modal state.
-
-            Entering: "ease-out duration-300"
-            From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            To: "opacity-100 translate-y-0 sm:scale-100"
-            Leaving: "ease-in duration-200"
-            From: "opacity-100 translate-y-0 sm:scale-100"
-            To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-        -->
         <transition name="fade">
             <div v-show="modalVisible" class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
@@ -161,7 +167,7 @@ const crearElemento = () => {
         </div>
     </div>
 </div>
-</transition>
+</transition> -->
 
 
     
