@@ -6,6 +6,7 @@ import { useForm} from '@inertiajs/vue3'
 import axios from 'axios';
 const props = defineProps({
         suppliers: Array,
+        products: Array,
 });
 
 const form = useForm({

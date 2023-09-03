@@ -1,21 +1,32 @@
 <script setup>
+import modalCrear from '../Suppliers/ModalCrear.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import {Link} from '@inertiajs/vue3';
+import {defineComponent, ref} from 'vue';
+
+const components = defineComponent({
+    'modal-crear' : modalCrear,
+})
+
 const props = defineProps({
         products: Array,
 });
 
-const destroy = () => {
-    const id = props.products.id;
-    axios.delete(`/products/${id}`).then(respuesta=>{
-        console.log(respuesta.data);
-        if(respuesta.data.status){
-            console.log(props.products);
-        }
-    }).catch(error=>{
-        console.log(error.response);
-        console.log(error);
-    });
+const modalVisible = ref(false);
+
+const openModelCrear = () => {
+    console.log("Abriendo modal");
+    modalVisible.value = true;
+}
+
+const closeModelCrear = () => {
+    console.log("Cerrando Modal");
+    modalVisible.value = false;
+
+}
+
+const agregarProducts = (dato) => {
+    products.push(dato);
 }
 
 </script>
@@ -38,7 +49,7 @@ const destroy = () => {
                         </div>
                     </div>
                     <div class="md:col-span-2 mt-5 md:mt-0">
-                        <Link :href="route('products.create')" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md">Crear</Link>
+                        <button @click="openModelCrear()" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md" type="button">Crear</button>
                         <div class="shadow bg-white md:rounded-md p-4">
                             <table>
                                 <thead>
@@ -73,6 +84,8 @@ const destroy = () => {
             </div>
         </div>
     </AppLayout>
+    <modal-crear @closeModelCrear="closeModelCrear" @agregarProducts="agregarProducts" v-if="modalVisible" :products="products" ></modal-crear>
+
 </template>
 
 <script>
