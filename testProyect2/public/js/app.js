@@ -2248,6 +2248,9 @@ new (vue_dist_vue_js__WEBPACK_IMPORTED_MODULE_0___default())({
         }
         swal('Error', message, 'error');
       });
+    },
+    enviarDatos: function enviarDatos($curso) {
+      console.log($curso);
     }
   }
 });

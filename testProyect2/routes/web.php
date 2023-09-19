@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationsController;
+use App\Http\Controllers\Admin\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +16,11 @@ use App\Http\Controllers\AuthenticationsController;
 */
 
 Route::get('/', function () {
-    return view('login');
+    return view('admin/index');
 });
 
 Route::post('login', [AuthenticationsController::class, 'login']);
+Route::get('listadoCursos', [HomeController::class, 'listarCursos']);
+Route::get('listadoEstudiantes', [HomeController::class, 'listarEstudiantes'])->name('estudiantes.show');
+Route::patch('/cursos', [HomeController::class, 'editarCursos'])->name('cursos.update');
+

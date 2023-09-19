@@ -16,6 +16,7 @@ class AuthenticationsController extends Controller
         //Login personalizado
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password], false)){
             return response()->json('Has iniciado sesion', 200);
+            return view('index');
         }else{
             return response()->json(['errors' => ['login' => ['Los datos que ingresaste son incorrectos']]], 422);
         }

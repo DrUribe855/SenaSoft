@@ -34,6 +34,9 @@ new Vue({
 
 				swal('Error', message, 'error');
 			});
+		},
+		enviarDatos($curso){
+			console.log($curso);
 		}
 	}
 });
